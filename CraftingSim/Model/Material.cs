@@ -20,5 +20,24 @@ namespace CraftingSim.Model
             Id = id;
             Name = name;
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Material);
+        }
+
+        public bool Equals(Material other)
+        {
+            if (other == null)
+                return false;
+
+            return this.Id == other.Id || string.Equals(this.Name, other.Name,
+            StringComparison.OrdinalIgnoreCase);
+        }
+
+        public bool Equals(IMaterial other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

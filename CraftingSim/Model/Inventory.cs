@@ -57,7 +57,10 @@ namespace CraftingSim.Model
         /// <returns>True if removed successfuly, false if not enough material</returns>
         public bool RemoveMaterial(IMaterial material, int quantity)
         {
-            // TODO Implement Me
+            if (materials.ContainsKey(material) && materials[material] >= quantity)
+            {
+                
+            }
             return false;
         }
 

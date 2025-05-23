@@ -42,5 +42,10 @@ namespace CraftingSim.Model
             int hashName = Name?.ToLowerInvariant().GetHashCode() ?? 0;
             return hashId ^ hashName;
         }
+
+        public bool Equals(IMaterial other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

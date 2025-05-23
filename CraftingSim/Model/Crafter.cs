@@ -31,7 +31,15 @@ namespace CraftingSim.Model
         /// <param name="recipeFiles">Array of file paths</param>
         public void LoadRecipesFromFile(string[] recipeFiles)
         {
-            //TODO Implement Me
+            foreach (string filePath in recipeFiles)
+            {
+                string[] lines = System.IO.File.ReadAllLines(filePath);
+
+                string name = null;
+                double successRate = 0.0;
+                Dictionary<IMaterial, int> requiredMaterials = new Dictionary<IMaterial, int>();
+
+            }
         }
 
         /// <summary>

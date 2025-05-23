@@ -24,5 +24,14 @@ namespace CraftingSim.Model
             SuccessRate = successRate;
             RequiredMaterials = new Dictionary<IMaterial, int>(requiredMaterials);
         }
+
+        public int CompareTo(Recipe other)
+        {
+            if (other == null)
+                return 1;
+
+            return string.Compare(this.Name, other.Name,
+            StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

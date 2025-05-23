@@ -39,6 +39,11 @@ namespace CraftingSim.Model
                 double successRate = 0.0;
                 Dictionary<IMaterial, int> requiredMaterials = new Dictionary<IMaterial, int>();
 
+                foreach (string line in lines)
+                {
+                    string trimmed = line.Trim();
+                }
+
             }
         }
 

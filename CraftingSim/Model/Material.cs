@@ -9,5 +9,16 @@ namespace CraftingSim.Model
     {
         public int Id { get; }
         public string Name { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        public Material(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

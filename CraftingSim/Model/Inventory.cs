@@ -103,6 +103,8 @@ namespace CraftingSim.Model
             foreach (string line in lines)
             {
                 string trimmed = line.Trim();
+
+                string[] parts = trimmed.Split(',');
             }
         }
     }

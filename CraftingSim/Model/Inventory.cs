@@ -59,7 +59,11 @@ namespace CraftingSim.Model
         {
             if (materials.ContainsKey(material) && materials[material] >= quantity)
             {
-                
+                materials[material] -= quantity;
+                {
+                    materials.Remove(material);
+                }
+                return true;
             }
             return false;
         }

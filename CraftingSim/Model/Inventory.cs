@@ -38,7 +38,10 @@ namespace CraftingSim.Model
         /// <param name="quantity">The new amount to set</param>
         public void AddMaterial(IMaterial material, int quantity)
         {
-            //TODO Implement Me
+            if (materials.ContainsKey(material))
+            {
+                
+            }
         }
 
         /// <summary>

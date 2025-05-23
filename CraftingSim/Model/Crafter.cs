@@ -39,60 +39,40 @@ namespace CraftingSim.Model
                     continue;
 
                 string[] lines = System.IO.File.ReadAllLines(filePath);
-                string name = null;
+                if (lines.Length == 0)
+                    continue;
+
+                // Parse first line: "name, successRate"
+                string[] firstLineParts = lines[0].Split(',');
+                if (firstLineParts.Length < 2)
+                    continue;
+
+                string name = firstLineParts[0].Trim();
                 double successRate = 0.0;
+                double.TryParse(firstLineParts[1].Trim(), out successRate);
+
                 Dictionary<IMaterial, int> requiredMaterials = new Dictionary<IMaterial, int>();
 
-                bool materialsSection = false;
-
-                // This will trim everything to be lower-cased
-                foreach (string line in lines)
+                // Parse subsequent lines: "materialId, quantity"
+                for (int i = 1; i < lines.Length; i++)
                 {
-                    string trimmed = line.Trim();
-
-                    if (string.IsNullOrEmpty(trimmed))
+                    string line = lines[i].Trim();
+                    if (string.IsNullOrEmpty(line))
                         continue;
 
-                    if (trimmed.StartsWith("Name:",
-                    StringComparison.OrdinalIgnoreCase))
+                    string[] parts = line.Split(',');
+                    if (parts.Length < 2)
+                        continue;
+
+                    int materialId = 0;
+                    int quantity = 0;
+                    if (int.TryParse(parts[0].Trim(), out materialId) &&
+                        int.TryParse(parts[1].Trim(), out quantity))
                     {
-                        name = trimmed.Substring(5).Trim();
-                    }
-                    else if (trimmed.StartsWith("SuccessRate:",
-                    StringComparison.OrdinalIgnoreCase))
-                    {
-                        double.TryParse(trimmed.Substring(12).Trim(), out successRate);
-                    }
-                    else if (trimmed.StartsWith("Materials:",
-                    StringComparison.OrdinalIgnoreCase))
-                    {
-                        materialsSection = true;
-                    }
-                    else if (materialsSection)
-                    {
-                        // Expecting lines like "<material name>: <quantity>"
-                        string[] parts = trimmed.Split(':');
-                        if (parts.Length == 2)
+                        IMaterial material = inventory.GetMaterial(materialId);
+                        if (material != null && quantity > 0)
                         {
-                            string materialName = parts[0].Trim();
-                            int quantity = 0;
-                            int.TryParse(parts[1].Trim(), out quantity);
-
-                            // Find material in inventory by name
-                            IMaterial material = null;
-                            foreach (var m in inventory.Materials)
-                            {
-                                if (string.Equals(m.Name, materialName, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    material = m;
-                                    break;
-                                }
-                            }
-
-                            if (material != null && quantity > 0)
-                            {
-                                requiredMaterials[material] = quantity;
-                            }
+                            requiredMaterials[material] = quantity;
                         }
                     }
                 }

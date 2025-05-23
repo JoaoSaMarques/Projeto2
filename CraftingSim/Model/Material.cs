@@ -31,7 +31,8 @@ namespace CraftingSim.Model
             if (other == null)
                 return false;
 
-            return this.Id == other.Id || string.Equals(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
+            return this.Id == other.Id || string.Equals(this.Name, other.Name,
+            StringComparison.OrdinalIgnoreCase);
         }
 
         public override int GetHashCode()

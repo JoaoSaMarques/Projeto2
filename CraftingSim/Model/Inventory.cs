@@ -99,6 +99,11 @@ namespace CraftingSim.Model
         public void LoadMaterialsFromFile(string file)
         {
             string[] lines = System.IO.File.ReadAllLines(file);
+
+            foreach (string line in lines)
+            {
+                string trimmed = line.Trim();
+            }
         }
     }
 }

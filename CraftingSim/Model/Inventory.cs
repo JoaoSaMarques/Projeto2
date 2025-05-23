@@ -105,6 +105,18 @@ namespace CraftingSim.Model
                 string trimmed = line.Trim();
 
                 string[] parts = trimmed.Split(',');
+
+                if (parts.Length >= 3)
+                {
+                    int id;
+                    int quantity;
+                    if (int.TryParse(parts[0].Trim(), out id) && int.TryParse(parts[2].Trim(), out quantity))
+                    {
+                        string name = parts[1].Trim();
+                        IMaterial material = new Material(id, name); // Assuming Material class implements IMaterial
+                        AddMaterial(material, quantity);
+                    }
+                }
             }
         }
     }

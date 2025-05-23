@@ -1,20 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CraftingSim.Model
 {
-    public class Material : IMaterial, IEquatable<Material>
+    public class Material : IMaterial, IEquatable<IMaterial>
     {
         public int Id { get; }
         public string Name { get; }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
         public Material(int id, string name)
         {
             Id = id;
@@ -23,10 +15,10 @@ namespace CraftingSim.Model
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Material);
+            return Equals(obj as IMaterial);
         }
 
-        public bool Equals(Material other)
+        public bool Equals(IMaterial other)
         {
             if (other == null)
                 return false;
@@ -35,17 +27,12 @@ namespace CraftingSim.Model
             StringComparison.OrdinalIgnoreCase);
         }
 
+        // Recipes são ordenadas pelo nome (case insensitive).
         public override int GetHashCode()
         {
-            // Combine hash codes of Id and Name (case-insensitive)
             int hashId = Id.GetHashCode();
             int hashName = Name?.ToLowerInvariant().GetHashCode() ?? 0;
             return hashId ^ hashName;
-        }
-
-        public bool Equals(IMaterial other)
-        {
-            throw new NotImplementedException();
         }
     }
 }

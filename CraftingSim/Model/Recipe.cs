@@ -10,5 +10,19 @@ namespace CraftingSim.Model
         public string Name { get; }
         public double SuccessRate { get; }
         public IReadOnlyDictionary<IMaterial, int> RequiredMaterials { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="successRate"></param>
+        /// <param name="requiredMaterials"></param>
+        public Recipe(string name, double successRate, Dictionary<IMaterial,
+        int> requiredMaterials)
+        {
+            Name = name;
+            SuccessRate = successRate;
+            RequiredMaterials = new Dictionary<IMaterial, int>(requiredMaterials);
+        }
     }
 }

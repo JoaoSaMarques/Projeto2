@@ -110,10 +110,11 @@ namespace CraftingSim.Model
                 {
                     int id;
                     int quantity;
-                    if (int.TryParse(parts[0].Trim(), out id) && int.TryParse(parts[2].Trim(), out quantity))
+                    if (int.TryParse(parts[0].Trim(), out id)
+                    && int.TryParse(parts[2].Trim(), out quantity))
                     {
                         string name = parts[1].Trim();
-                        IMaterial material = new Material(id, name); // Assuming Material class implements IMaterial
+                        IMaterial material = new Material(id, name);
                         AddMaterial(material, quantity);
                     }
                 }

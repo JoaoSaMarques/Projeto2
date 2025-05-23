@@ -45,6 +45,7 @@ namespace CraftingSim.Model
 
                 bool materialsSection = false;
 
+                // This will trim everything to be short
                 foreach (string line in lines)
                 {
                     string trimmed = line.Trim();

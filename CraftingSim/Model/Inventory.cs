@@ -60,7 +60,6 @@ namespace CraftingSim.Model
             if (materials.ContainsKey(material) && materials[material] >= quantity)
             {
                 materials[material] -= quantity;
-                if (materials[material] == 0)
                 {
                     materials.Remove(material);
                 }
@@ -68,7 +67,6 @@ namespace CraftingSim.Model
             }
             return false;
         }
-
 
         /// <summary>
         /// Get all the materials the user has in the inventory.

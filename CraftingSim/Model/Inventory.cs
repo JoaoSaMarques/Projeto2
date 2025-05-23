@@ -98,11 +98,16 @@ namespace CraftingSim.Model
         /// <param name="file">Path to the materials file</param>
         public void LoadMaterialsFromFile(string file)
         {
+            if (!System.IO.File.Exists(file))
+                return;
+
             string[] lines = System.IO.File.ReadAllLines(file);
 
             foreach (string line in lines)
             {
                 string trimmed = line.Trim();
+                if (string.IsNullOrEmpty(trimmed))
+                    continue;
 
                 string[] parts = trimmed.Split(',');
 
@@ -110,8 +115,7 @@ namespace CraftingSim.Model
                 {
                     int id;
                     int quantity;
-                    if (int.TryParse(parts[0].Trim(), out id)
-                    && int.TryParse(parts[2].Trim(), out quantity))
+                    if (int.TryParse(parts[0].Trim(), out id) && int.TryParse(parts[2].Trim(), out quantity))
                     {
                         string name = parts[1].Trim();
                         IMaterial material = new Material(id, name);
@@ -120,5 +124,6 @@ namespace CraftingSim.Model
                 }
             }
         }
+
     }
 }

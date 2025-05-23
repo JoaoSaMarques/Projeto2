@@ -45,7 +45,7 @@ namespace CraftingSim.Model
 
                 bool materialsSection = false;
 
-                // This will trim everything to be short
+                // This will trim everything to be lower-cased
                 foreach (string line in lines)
                 {
                     string trimmed = line.Trim();
@@ -53,15 +53,18 @@ namespace CraftingSim.Model
                     if (string.IsNullOrEmpty(trimmed))
                         continue;
 
-                    if (trimmed.StartsWith("Name:", StringComparison.OrdinalIgnoreCase))
+                    if (trimmed.StartsWith("Name:",
+                    StringComparison.OrdinalIgnoreCase))
                     {
                         name = trimmed.Substring(5).Trim();
                     }
-                    else if (trimmed.StartsWith("SuccessRate:", StringComparison.OrdinalIgnoreCase))
+                    else if (trimmed.StartsWith("SuccessRate:",
+                    StringComparison.OrdinalIgnoreCase))
                     {
                         double.TryParse(trimmed.Substring(12).Trim(), out successRate);
                     }
-                    else if (trimmed.StartsWith("Materials:", StringComparison.OrdinalIgnoreCase))
+                    else if (trimmed.StartsWith("Materials:",
+                    StringComparison.OrdinalIgnoreCase))
                     {
                         materialsSection = true;
                     }

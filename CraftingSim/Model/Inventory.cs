@@ -40,7 +40,11 @@ namespace CraftingSim.Model
         {
             if (materials.ContainsKey(material))
             {
-                
+                materials[material] += quantity;
+            }
+            else
+            {
+                materials[material] = quantity;
             }
         }
 

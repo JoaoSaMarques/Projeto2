@@ -98,7 +98,7 @@ namespace CraftingSim.Model
         /// <param name="file">Path to the materials file</param>
         public void LoadMaterialsFromFile(string file)
         {
-            //TODO Implement Me
+            string[] lines = System.IO.File.ReadAllLines(file);
         }
     }
 }

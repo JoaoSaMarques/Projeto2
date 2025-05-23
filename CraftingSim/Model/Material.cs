@@ -31,13 +31,15 @@ namespace CraftingSim.Model
             if (other == null)
                 return false;
 
-            return this.Id == other.Id || string.Equals(this.Name, other.Name,
-            StringComparison.OrdinalIgnoreCase);
+            return this.Id == other.Id || string.Equals(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
         }
 
-        public bool Equals(IMaterial other)
+        public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            // Combine hash codes of Id and Name (case-insensitive)
+            int hashId = Id.GetHashCode();
+            int hashName = Name?.ToLowerInvariant().GetHashCode() ?? 0;
+            return hashId ^ hashName;
         }
     }
 }

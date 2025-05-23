@@ -31,20 +31,77 @@ namespace CraftingSim.Model
         /// <param name="recipeFiles">Array of file paths</param>
         public void LoadRecipesFromFile(string[] recipeFiles)
         {
+            recipeList.Clear();
+
             foreach (string filePath in recipeFiles)
             {
-                string[] lines = System.IO.File.ReadAllLines(filePath);
+                if (!System.IO.File.Exists(filePath))
+                    continue;
 
+                string[] lines = System.IO.File.ReadAllLines(filePath);
                 string name = null;
                 double successRate = 0.0;
                 Dictionary<IMaterial, int> requiredMaterials = new Dictionary<IMaterial, int>();
 
+                bool materialsSection = false;
+
                 foreach (string line in lines)
                 {
                     string trimmed = line.Trim();
+
+                    if (string.IsNullOrEmpty(trimmed))
+                        continue;
+
+                    if (trimmed.StartsWith("Name:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        name = trimmed.Substring(5).Trim();
+                    }
+                    else if (trimmed.StartsWith("SuccessRate:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        double.TryParse(trimmed.Substring(12).Trim(), out successRate);
+                    }
+                    else if (trimmed.StartsWith("Materials:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        materialsSection = true;
+                    }
+                    else if (materialsSection)
+                    {
+                        // Expecting lines like "<material name>: <quantity>"
+                        string[] parts = trimmed.Split(':');
+                        if (parts.Length == 2)
+                        {
+                            string materialName = parts[0].Trim();
+                            int quantity = 0;
+                            int.TryParse(parts[1].Trim(), out quantity);
+
+                            // Find material in inventory by name
+                            IMaterial material = null;
+                            foreach (var m in inventory.Materials)
+                            {
+                                if (string.Equals(m.Name, materialName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    material = m;
+                                    break;
+                                }
+                            }
+
+                            if (material != null && quantity > 0)
+                            {
+                                requiredMaterials[material] = quantity;
+                            }
+                        }
+                    }
                 }
 
+                if (!string.IsNullOrEmpty(name))
+                {
+                    IRecipe recipe = new Recipe(name, successRate, requiredMaterials);
+                    recipeList.Add(recipe);
+                }
             }
+
+            // Sort the recipe list by name (case insensitive)
+            recipeList.Sort((r1, r2) => string.Compare(r1.Name, r2.Name, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
